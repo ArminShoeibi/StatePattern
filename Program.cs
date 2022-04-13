@@ -1,5 +1,4 @@
-﻿using StatePattern;
-using System;
+﻿using System;
 
 Canvas canvas = new(new SelectionTool());
 canvas.OnMouseDown();
@@ -18,6 +17,22 @@ Console.WriteLine($"Current Tool is {canvas.GetCurrentTool.GetType().Name}");
  * a context object whose behavior varies as its state object changes.
  */
 
+public interface ITool
+{
+    void OnMouseDown();
+    void OnMouseUp();
+}
+
+public class SelectionTool : ITool
+{
+    public void OnMouseDown() => Console.WriteLine("Selection Icon");
+    public void OnMouseUp() => Console.WriteLine("Draw a dashed rectangle");
+}
+public class BrushTool : ITool
+{
+    public void OnMouseDown() => Console.WriteLine("Brush Icon");
+    public void OnMouseUp() => Console.WriteLine("Draw a line");
+}
 
 public class Canvas
 {
@@ -30,23 +45,4 @@ public class Canvas
     public ITool GetCurrentTool => _currentTool;
     public void OnMouseDown() => _currentTool.OnMouseDown();
     public void OnMouseUp() => _currentTool.OnMouseUp();
-
-}
-
-public interface ITool
-{
-    void OnMouseDown();
-    void OnMouseUp();
-}
-
-
-public class SelectionTool : ITool
-{
-    public void OnMouseDown() => Console.WriteLine("Selection Icon");
-    public void OnMouseUp() => Console.WriteLine("Draw a dashed rectangle");
-}
-public class BrushTool : ITool
-{
-    public void OnMouseDown() => Console.WriteLine("Brush Icon");
-    public void OnMouseUp() => Console.WriteLine("Draw a line");
 }
